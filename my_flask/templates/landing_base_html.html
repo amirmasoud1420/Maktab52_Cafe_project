@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cafe-{% block title %}{% endblock %}</title>
+    <link href={{ url_for('static',filename='bootstrap.min.css') }} rel="stylesheet">
+    <link href={{ url_for('static',filename='landing_base_css.css') }} rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% block extera_head %}{% endblock %}
+    <style>
+        body, h1, h2, h3, h4, h5 {
+            font-family: "Raleway", sans-serif
+        }
+    </style>
+</head>
+<body style="background-color:lightyellow;z-index: 99">
+<div class="container-fluid">
+
+    <!--    Header-->
+    <div style="position: sticky;top: 0;z-index: 99" class="row">
+
+        <button class="h_button" onclick="content_include('home')">HOME</button>
+        <button class="h_button" onclick="content_include('about')">ABOUT</button>
+        <button class="h_button" onclick="content_include('contact')"> CONTACT US</button>
+        <button class="h_button" onclick="content_include('menu')">MENU</button>
+        <button class="h_button" onclick="content_include('landing_order_list')">ORDER LIST</button>
+    </div>
+
+    <!--    Body-->
+    <div class="row" id="content">
+        {% block main %}
+
+        {% endblock %}
+    </div>
+
+    <!--    Footer-->
+    <div class="row footer">
+
+        <p style="margin-top: 2rem; color: white">Produced By <a href="https://github.com/amirmasoud1420">S.A.H.A</a>
+        </p>
+    </div>
+</div>
+<script>
+    function content_include(name) {
+        $.get("{{ url_for('page_content') }}", {'name': name}, function (response) {
+            $('#content').html('')
+            $('#content').html(response)
+        })
+    }
+</script>
+</body>
+</html>

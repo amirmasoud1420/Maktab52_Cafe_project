@@ -17,8 +17,9 @@ class BaseUser(BaseModel):
 
 
 class BaseTable(BaseModel):
-    table_number: int
+    number: int
     position: str
+    status: int
 
 
 class BaseMenuItem(BaseModel):

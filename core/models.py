@@ -22,10 +22,14 @@ class BaseTable(BaseModel):
     status: int
 
 
+class BaseCategory(BaseModel):
+    name: str
+
+
 class BaseMenuItem(BaseModel):
     name: str
     price: int
-    category: str
+    category: BaseCategory
     discount: float
     serving_time_period: int
     estimated_cooking_time: int

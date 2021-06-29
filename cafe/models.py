@@ -6,11 +6,16 @@ class Table(BaseTable):
         self.number = number
         self.position = position
         self.status = status
-        self.table_name = 'table'
+        self.table_name = '"table"'
+
+
+class Category(BaseCategory):
+    def __init__(self, name):
+        self.name = name
 
 
 class MenuItem(BaseMenuItem):
-    def __init__(self, name, price, category, serving_time_period, estimated_cooking_time, discount=0):
+    def __init__(self, name, price, category: Category, serving_time_period, estimated_cooking_time, discount=0):
         self.name = name
         self.price = price
         self.category = category

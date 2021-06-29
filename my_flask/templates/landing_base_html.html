@@ -2,17 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cafe-{% block title %}{% endblock %}</title>
+    <title>Cafe</title>
     <link href={{ url_for('static',filename='bootstrap.min.css') }} rel="stylesheet">
     <link href={{ url_for('static',filename='landing_base_css.css') }} rel="stylesheet">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {% block extera_head %}{% endblock %}
+    <link rel="stylesheet" href={{ url_for('static',filename='home.css') }}>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link href="https://static.neshan.org/sdk/openlayers/5.3.0/ol.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script type="text/javascript" src="https://static.neshan.org/sdk/openlayers/5.3.0/ol.js"></script>
     <style>
         body, h1, h2, h3, h4, h5 {
             font-family: "Raleway", sans-serif
+
         }
     </style>
 </head>
@@ -24,16 +29,37 @@
 
         <button class="h_button" onclick="content_include('home')">HOME</button>
         <button class="h_button" onclick="content_include('about')">ABOUT</button>
-        <button class="h_button" onclick="content_include('contact')"> CONTACT US</button>
+        <button class="h_button" onclick="content_include('Contact')"> CONTACT US</button>
         <button class="h_button" onclick="content_include('menu')">MENU</button>
         <button class="h_button" onclick="content_include('landing_order_list')">ORDER LIST</button>
     </div>
 
     <!--    Body-->
     <div class="row" id="content">
-        {% block main %}
+        <div class="container" style="color: white">
+            <header>
+                <a href="#" class="logo"><br>coffee sharif</a>
+            </header>
+            <div class="banner">
+                <video SRC={{ url_for('static',filename='CAfevideo.mp4') }} muted autoplay loop type="mp4"></video>
+                <div class="textBox">
+                    <h2>In the heart of Tehran</h2><br>
+                    <p> A gallery, café and lounge in the heart of Toronto’s creative downtown<br>
+                        <br>Experience the best with us
+                    </p><br>
+                    <a href="#">RESERV ONLINE </a>
+                </div>
+                <div class="videoBx">
+                    <video SRC={{ url_for('static',filename='CAfevideo.mp4') }} muted autoplay loop type="mp4"></video>
+                </div>
+                <ul class="sci">
+                    <li><a href="#"><img src={{ url_for('static',filename='facebook.png') }}></a></li>
+                    <li><a href="#"><img src={{ url_for('static',filename='twitter.png') }}></a></li>
+                    <li><a href="#"><img src={{ url_for('static',filename='instagram.png') }}></a></li>
 
-        {% endblock %}
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!--    Footer-->

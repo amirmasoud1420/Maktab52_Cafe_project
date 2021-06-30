@@ -1,5 +1,5 @@
 from abc import ABC
-from datetime import datetime
+from datetime import datetime, date, time
 
 
 class BaseModel(ABC):
@@ -40,11 +40,13 @@ class BaseOrder(BaseModel):
     menu_items: list
     number: int
     status: int
-    time_stamp: datetime
+    date_time_stamp: date
+    time_time_stamp: time
 
 
 class BaseReceipt(BaseModel):
     order: BaseOrder
     total_price: int
     final_price: int
-    time_stamp: datetime
+    date_time_stamp: date
+    time_time_stamp: time

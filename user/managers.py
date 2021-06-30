@@ -13,14 +13,15 @@ class UserManager(DataBaseManager):
         self.conn.commit()
 
     def read(self, phone_number, password):
-        self.curs.execute(
-            f"select * from {self.table_name} where phone_number='{phone_number}' and password='{password}'")
-        user = self.curs.fetchone()
-        if user:
+        try:
+            self.curs.execute(
+                f"select * from {self.table_name} where phone_number='{phone_number}' and password='{password}'")
+            user = self.curs.fetchone()
+
             u = User(user[1], user[2], user[3], user[4], user[5], user[6])
             u.id = user[0]
             return u
-        else:
+        except:
             return False
 
     def update(self, phone_number, password, col, val):

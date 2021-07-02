@@ -50,6 +50,20 @@ class TableManager(DataBaseManager):
         )
         self.conn.commit()
 
+    def read_all(self):
+        try:
+            self.curs.execute(
+                f"select * from {self.table_name}")
+            table = self.curs.fetchall()
+            tables = []
+            for i in table:
+                t = Table(i[1], i[2], i[3])
+                t.id = i[0]
+                tables.append(t)
+            return tables
+        except:
+            return False
+
 
 class CategoryManager(DataBaseManager):
     def __init__(self):
@@ -96,6 +110,20 @@ class CategoryManager(DataBaseManager):
             f"delete from {self.table_name} where name='{name}'"
         )
         self.conn.commit()
+
+    def read_all(self):
+        try:
+            self.curs.execute(
+                f"select * from {self.table_name}")
+            category = self.curs.fetchall()
+            categoryes = []
+            for i in category:
+                c = Category(i[1])
+                c.id = i[0]
+                categoryes.append(c)
+            return categoryes
+        except:
+            return False
 
 
 class MenuItemManager(DataBaseManager):
@@ -160,6 +188,19 @@ class MenuItemManager(DataBaseManager):
         )
         self.conn.commit()
 
+    def read_all(self):
+        try:
+            self.curs.execute(
+                f"select name from {self.table_name}")
+            names = self.curs.fetchall()
+            menu_items = []
+            for i in names:
+                m = self.read(i[0])
+                menu_items.append(m)
+            return menu_items
+        except:
+            return False
+
 
 class OrderManager(DataBaseManager):
     def __init__(self):
@@ -206,7 +247,9 @@ class OrderManager(DataBaseManager):
             tm = TableManager()
             table = tm.read_by_id(order[1])
 
-            o = Order(table, order[2], order[3], order[4], order[5], lis)
+            o = Order(table, order[2], order[3], lis)
+            o.date_time_stamp = order[4]
+            o.time_time_stamp = order[5]
             o.id = order[0]
             tm.close()
             mm.close()
@@ -219,6 +262,19 @@ class OrderManager(DataBaseManager):
             f"update {self.table_name} set {col}='{val}' where number={number}"
         )
         self.conn.commit()
+
+    def read_all(self):
+        try:
+            self.curs.execute(
+                f"select number from {self.table_name}")
+            numbers = self.curs.fetchall()
+            orders = []
+            for i in numbers:
+                o = self.read(i[0])
+                orders.append(o)
+            return orders
+        except:
+            return False
 
     def delete(self, number):
         self.curs.execute(
@@ -247,7 +303,9 @@ class ReceiptManager(DataBaseManager):
             receipt = self.curs.fetchone()
             om = OrderManager()
             order = om.read(receipt[2])
-            r = Receipt(order, receipt[3], receipt[4], receipt[5], receipt[6])
+            r = Receipt(order, receipt[3], receipt[4])
+            r.date_time_stamp = receipt[5]
+            r.time_time_stamp = receipt[6]
             r.id = receipt[0]
             om.close()
             return r
@@ -265,3 +323,18 @@ class ReceiptManager(DataBaseManager):
             f"delete from {self.table_name} where order_number={order_number}"
         )
         self.conn.commit()
+
+    def read_all(self):
+        try:
+            table_name = '"order"'
+            self.curs.execute(
+                f"select number from {table_name} ")
+            numbers = self.curs.fetchall()
+            receipt = []
+            for i in numbers:
+                r = self.read(i[0])
+                if r:
+                    receipt.append(r)
+            return receipt
+        except:
+            return False

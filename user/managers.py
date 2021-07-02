@@ -35,3 +35,16 @@ class UserManager(DataBaseManager):
             f"delete from {self.table_name} where phone_number='{phone_number}' and password='{password}'"
         )
         self.conn.commit()
+
+    def read_all(self):
+        try:
+            self.curs.execute(
+                f"select phone_number, password from {self.table_name}")
+            phone_pass = self.curs.fetchall()
+            users = []
+            for i in phone_pass:
+                u = self.read(i[0], i[1])
+                users.append(u)
+            return users
+        except:
+            return False

@@ -247,9 +247,10 @@ class OrderManager(DataBaseManager):
             tm = TableManager()
             table = tm.read_by_id(order[1])
 
-            o = Order(table, order[2], order[3], lis)
+            o = Order(table, order[3], lis)
             o.date_time_stamp = order[4]
             o.time_time_stamp = order[5]
+            o.number = order[2]
             o.id = order[0]
             tm.close()
             mm.close()
@@ -303,7 +304,9 @@ class ReceiptManager(DataBaseManager):
             receipt = self.curs.fetchone()
             om = OrderManager()
             order = om.read(receipt[2])
-            r = Receipt(order, receipt[3], receipt[4])
+            r = Receipt(order, 0)
+            r.total_price = receipt[3]
+            r.final_price = receipt[4]
             r.date_time_stamp = receipt[5]
             r.time_time_stamp = receipt[6]
             r.id = receipt[0]

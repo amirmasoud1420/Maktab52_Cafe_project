@@ -26,21 +26,28 @@ class MenuItem(BaseMenuItem):
 
 
 class Order(BaseOrder):
-    def __init__(self, table, number, status, menu_items):
+    Number = 3
+    def __init__(self, table, status, menu_items):
+        Order.Number += 1
+        self.number = Order.Number
         self.table = table
         self.menu_items = menu_items  # [(menu_item,quantity),(menu_item,quantity),...]
-        self.number = number
         self.status = status
         self.date_time_stamp = date.today()
-        self.time_time_stamp = time(hour=datetime.now().hour, minute=datetime.now().minute, second=datetime.now().second)
+        self.time_time_stamp = time(hour=datetime.now().hour, minute=datetime.now().minute,
+                                    second=datetime.now().second)
         self.table_name = 'order'
 
 
 class Receipt(BaseReceipt):
-    def __init__(self, order, total_price, final_price):
+    def __init__(self, order, discount: int = 0):
         self.order = order
-        self.total_price = total_price
-        self.final_price = final_price
+        sum = 0
+        for i in order.menu_items:
+            sum += (i[0].price * i[1])
+        self.total_price = sum
+        self.final_price = sum - int((sum * discount) / 100)
         self.date_time_stamp = date.today()
-        self.time_time_stamp = time(hour=datetime.now().hour, minute=datetime.now().minute, second=datetime.now().second)
+        self.time_time_stamp = time(hour=datetime.now().hour, minute=datetime.now().minute,
+                                    second=datetime.now().second)
         self.table_name = 'receipt'

@@ -114,16 +114,27 @@ class CategoryManager(DataBaseManager):
     def read_all(self):
         try:
             self.curs.execute(
-                f"select * from {self.table_name}")
-            category = self.curs.fetchall()
-            categoryes = []
-            for i in category:
-                c = Category(i[1])
-                c.id = i[0]
-                categoryes.append(c)
-            return categoryes
+                f"select name from {self.table_name}")
+            names = self.curs.fetchall()
+            categories = []
+            for i in names:
+                c = self.read(i[0])
+                categories.append(c)
+            return categories
         except:
             return False
+        # try:
+        #     self.curs.execute(
+        #         f"select * from {self.table_name}")
+        #     category = self.curs.fetchall()
+        #     categoryes = []
+        #     for i in category:
+        #         c = Category(i[1])
+        #         c.id = i[0]
+        #         categoryes.append(c)
+        #     return categoryes
+        # except:
+        #     return False
 
 
 class MenuItemManager(DataBaseManager):
@@ -339,5 +350,55 @@ class ReceiptManager(DataBaseManager):
                 if r:
                     receipt.append(r)
             return receipt
+        except:
+            return False
+
+
+class MessageManager(DataBaseManager):
+    def __init__(self):
+        super(MessageManager, self).__init__('"message"')
+
+    def create(self, m: Message):
+        self.curs.execute(
+            f"INSERT INTO {self.table_name}(first_name,last_name,email,my_message,date_time_stamp,time_time_stamp) VALUES ('{m.first_name}','{m.last_name}','{m.email}','{m.my_message}','{m.date_time_stamp}','{m.time_time_stamp}')"
+        )
+        self.conn.commit()
+
+    def read(self, email):
+        try:
+            self.curs.execute(
+                f"select * from {self.table_name} where email='{email}'")
+            message = self.curs.fetchone()
+
+            m = Message(message[1], message[2], message[3], message[4])
+            m.id = message[0]
+            m.date_time_stamp = message[5]
+            m.time_time_stamp = message[6]
+            return m
+        except:
+            return False
+
+    def update(self, email, col, val):
+        self.curs.execute(
+            f"update {self.table_name} set {col}='{val}' where email='{email}'"
+        )
+        self.conn.commit()
+
+    def delete(self, email):
+        self.curs.execute(
+            f"delete from {self.table_name} where email='{email}'"
+        )
+        self.conn.commit()
+
+    def read_all(self):
+        try:
+            self.curs.execute(
+                f"select email from {self.table_name}")
+            emails = self.curs.fetchall()
+            messages = []
+            for i in emails:
+                m = self.read(i[0])
+                messages.append(m)
+            return messages
         except:
             return False

@@ -63,7 +63,7 @@
 
                                             <!-- Modal footer -->
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                <button type="button" class="btn btn_detail" data-dismiss="modal">
                                                     Close
                                                 </button>
                                             </div>
@@ -113,7 +113,7 @@
 
                                             <!-- Modal footer -->
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                <button type="button" class="btn btn_detail" data-dismiss="modal">
                                                     Close
                                                 </button>
                                             </div>
@@ -163,7 +163,7 @@
 
                                             <!-- Modal footer -->
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                <button type="button" class="btn btn_detail" data-dismiss="modal">
                                                     Close
                                                 </button>
                                             </div>
@@ -213,7 +213,7 @@
 
                                             <!-- Modal footer -->
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                <button type="button" class="btn btn_detail" data-dismiss="modal">
                                                     Close
                                                 </button>
                                             </div>
@@ -264,7 +264,7 @@
 
                                             <!-- Modal footer -->
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                <button type="button" class="btn btn_detail" data-dismiss="modal">
                                                     Close
                                                 </button>
                                             </div>
@@ -290,7 +290,7 @@
 </div>
 <script>
     function ok_button(order_number,status) {
-        $.post("{{ url_for('page_content') }}", {'name': 'cashier_order_list' , 'number' : order_number ,'status' : status}, function (response) {
+        $.post("{{ url_for('cashier_page_content') }}", {'name': 'cashier_order_list' , 'number' : order_number ,'status' : status}, function (response) {
             $('#content').html('')
             $('#content').html(response)
         })

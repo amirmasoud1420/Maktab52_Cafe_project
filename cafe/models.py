@@ -1,4 +1,5 @@
 from core.models import *
+import random
 
 
 class Table(BaseTable):
@@ -26,7 +27,8 @@ class MenuItem(BaseMenuItem):
 
 
 class Order(BaseOrder):
-    Number = 3
+    Number = random.randint(100, 1000000)
+
     def __init__(self, table, status, menu_items):
         Order.Number += 1
         self.number = Order.Number
@@ -51,3 +53,14 @@ class Receipt(BaseReceipt):
         self.time_time_stamp = time(hour=datetime.now().hour, minute=datetime.now().minute,
                                     second=datetime.now().second)
         self.table_name = 'receipt'
+
+
+class Message:
+    def __init__(self, first_name, last_name, email, message):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.my_message = message
+        self.date_time_stamp = date.today()
+        self.time_time_stamp = time(hour=datetime.now().hour, minute=datetime.now().minute,
+                                    second=datetime.now().second)

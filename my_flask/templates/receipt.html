@@ -93,7 +93,7 @@
                         </div>
                     {% endfor %}
                     {% for i in paid_receipt %}
-                        <div class="x paid p_d">
+                        <div class="x paid ">
                             <div class="row order_row">
                                 <div class="col-3 n">Number {{ i.order.number }}</div>
                                 <div class="col-3 n">Table {{ i.order.table.number }}</div>
@@ -152,7 +152,7 @@
                         </div>
                     {% endfor %}
                     {% for i in deleted_receipt %}
-                        <div class="x deleted p_d">
+                        <div class="x deleted ">
                             <div class="row order_row">
                                 <div class="col-3 n">Number {{ i.order.number }}</div>
                                 <div class="col-3 n">Table {{ i.order.table.number }}</div>
@@ -210,6 +210,73 @@
                             </div>
                         </div>
                     {% endfor %}
+                    {% for i in receipts %}
+                        <div class="x archive">
+                            <div class="row order_row">
+                                <div class="col-3 n">Number {{ i.order.number }}</div>
+                                <div class="col-3 n">Table {{ i.order.table.number }}</div>
+                                <div class="col-3 n">
+                                    <button class="btn_detail n" data-toggle="modal"
+                                            data-target="#archive{{ i.order.number }}">
+                                        Detail
+                                    </button>
+                                    <div class="modal" id="archive{{ i.order.number }}">
+
+                                        <div class="modal-dialog">
+                                            <div class="modal-content ">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header h_modal">
+                                                    <h4 class="modal-title">Detail</h4>
+                                                    <button type="button" class="zarb" data-dismiss="modal">X
+                                                    </button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body b_modal">
+                                                    <h5>Table {{ i.order.table.number }}</h5>
+                                                    <p>Number {{ i.order.number }}</p>
+                                                    <p>total price : {{ i.total_price }}$</p>
+                                                    <p>Final price : {{ i.final_price }}$</p>
+                                                    {% for j in i.order.menu_items %}
+                                                        <p>{{ j[0].name }} {{ j[1] }}x : {{ j[0].price }}$</p>
+                                                    {% endfor %}
+                                                    <p>date : {{ i.date_time_stamp }}</p>
+                                                    <p>time : {{ i.time_time_stamp }}</p>
+                                                    {% if i.order.status == -1 %}
+                                                        <p>deleted</p>
+                                                    {% endif %}
+                                                    {% if i.order.status == 3 %}
+                                                        <p>paid</p>
+                                                    {% endif %}
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn_detail" data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button class="btn btn_detail" onclick="window.print()">Print
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-3">
+                                    {% if i.order.status == -1 %}
+                                        <p>deleted</p>
+                                    {% endif %}
+                                    {% if i.order.status == 3 %}
+                                        <p>paid</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
 
                 <!--{% endblock %}-->
@@ -222,7 +289,7 @@
     function filterSelection(c) {
         var x, i;
         x = document.getElementsByClassName("x");
-        if (c == "archive") c = "p_d";
+        //if (c == "archive") c = "p_d";
         for (i = 0; i < x.length; i++) {
             w3RemoveClass(x[i], "show");
             if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");

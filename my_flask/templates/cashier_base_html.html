@@ -31,7 +31,7 @@
                 <button class="h_row" onclick="content_include('tables')">TABLES</button>
             </div>
             <div class="row btn_row" style="">
-                <button class="h_row" onclick="content_include('menu_items')">MENU ITEMS</button>
+                <button class="h_row" onclick="content_include('add_menu_item')">MENU ITEMS</button>
             </div>
             <div class="row btn_row" style="">
                 <button class="h_row" onclick="content_include('receipt')">RECEIPT</button>
@@ -49,7 +49,7 @@
 </div>
 <script>
     function content_include(name) {
-        $.get("{{ url_for('page_content') }}", {'name': name}, function (response) {
+        $.get("{{ url_for('cashier_page_content') }}", {'name': name}, function (response) {
             $('#content').html('')
             $('#content').html(response)
         })
